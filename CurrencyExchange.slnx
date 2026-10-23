@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CurrencyExchange.Application/CurrencyExchange.Application.csproj" />
+  <Project Path="CurrencyExchange.Domain/CurrencyExchange.Domain.csproj" />
+  <Project Path="CurrencyExchange.Infrastructure/CurrencyExchange.Infrastructure.csproj" />
+  <Project Path="CurrencyExchange/CurrencyExchange.csproj" />
+</Solution>

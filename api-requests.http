@@ -1,0 +1,74 @@
+### Variables (cambia el puerto: 5087 con dotnet run, 8080 con Docker)
+@baseUrl = http://localhost:8080
+
+### 1. Login: devuelve el JWT
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+###
+@token = {{login.response.body.$.token}}
+
+### 2. Listar tipos de cambio
+GET {{baseUrl}}/api/exchange-rates
+Authorization: Bearer {{token}}
+
+### 3. Obtener por id
+GET {{baseUrl}}/api/exchange-rates/1
+Authorization: Bearer {{token}}
+
+### 4. Crear
+POST {{baseUrl}}/api/exchange-rates
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fromCurrency": "GBP",
+  "toCurrency": "PEN",
+  "rate": 4.7
+}
+
+### 5. Actualizar
+PUT {{baseUrl}}/api/exchange-rates/4
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fromCurrency": "GBP",
+  "toCurrency": "PEN",
+  "rate": 4.9
+}
+
+### 6. Eliminar
+DELETE {{baseUrl}}/api/exchange-rates/4
+Authorization: Bearer {{token}}
+
+### 7. Aplicar tipo de cambio a un monto
+POST {{baseUrl}}/api/conversion
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "amount": 100,
+  "fromCurrency": "USD",
+  "toCurrency": "PEN"
+}
+
+### 8. Error esperado: sin token (401)
+GET {{baseUrl}}/api/exchange-rates
+
+### 9. Error esperado: par inexistente (404)
+POST {{baseUrl}}/api/conversion
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "amount": 100,
+  "fromCurrency": "USD",
+  "toCurrency": "JPY"
+}
